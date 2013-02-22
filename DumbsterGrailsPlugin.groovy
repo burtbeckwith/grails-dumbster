@@ -6,7 +6,7 @@ import com.dumbster.smtp.SmtpMessage
 
 class DumbsterGrailsPlugin {
 
-	String version = '0.1'
+	String version = '0.2'
 	String grailsVersion = '2.0 > *'
 	String author = 'Burt Beckwith'
 	String authorEmail = 'beckwithb@vmware.com'
