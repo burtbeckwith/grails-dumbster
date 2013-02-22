@@ -11,6 +11,8 @@ class Dumbster {
 	def grailsApplication
 	def mailSender
 
+	Integer port
+
 	protected SimpleSmtpServer server
 
 	/**
@@ -20,7 +22,6 @@ class Dumbster {
 
 		def conf = grailsApplication.config.dumbster
 
-		int port
 		if (conf.port instanceof Number) {
 			port = conf.port
 		}
