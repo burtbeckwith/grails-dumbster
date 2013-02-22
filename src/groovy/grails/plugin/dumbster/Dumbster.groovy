@@ -1,5 +1,7 @@
 package grails.plugin.dumbster
 
+import org.springframework.mail.javamail.JavaMailSenderImpl
+
 import com.dumbster.smtp.SimpleSmtpServer
 import com.dumbster.smtp.SmtpMessage
 
@@ -9,7 +11,6 @@ import com.dumbster.smtp.SmtpMessage
 class Dumbster {
 
 	def grailsApplication
-	def mailSender
 
 	Integer port
 
@@ -32,7 +33,13 @@ class Dumbster {
 					new ServerSocket(port).close()
 
 					// update the mail plugin's JavaMailSender if available
-					mailSender?.port = port
+					if (grailsApplication.mainContext.containsBean('mailSender')) {
+						def mailSender = grailsApplication.mainContext.mailSender
+						if (mailSender instanceof JavaMailSenderImpl) {
+							mailSender.port = port
+						}
+					}
+
 					break
 				}
 				catch (IOException e) {

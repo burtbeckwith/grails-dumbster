@@ -24,14 +24,12 @@ class DumbsterGrailsPlugin {
 
 	def doWithSpring = {
 		def conf = application.config.dumbster
-
 		if (!conf.enabled) {
 			return
 		}
 
 		dumbster(Dumbster) { bean ->
 			grailsApplication = application
-			mailSender = ref('mailSender')
 			bean.initMethod = 'start'
 			bean.destroyMethod = 'stop'
 		}
