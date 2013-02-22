@@ -58,13 +58,15 @@ class Dumbster {
 	 * Stops the server; called by Spring, so shouldn't be called directly.
 	 */
 	void stop() {
-		server.stop()
+		server?.stop()
 	}
 
 	/**
 	 * Remove all sent emails. Call this in the setUp() method in your integration tests.
 	 */
 	void reset() {
+		if (!server) return
+
 		for (Iterator iter = server.receivedEmail; iter.hasNext(); ) {
 			iter.next()
 			iter.remove()
@@ -75,17 +77,17 @@ class Dumbster {
 	 * Check if stopped.
 	 * @return <code>true</code> if the server was stopped (or never started)
 	 */
-	boolean isStopped() { server.stopped }
+	boolean isStopped() { server ? server.stopped : true }
 
 	/**
 	 * Get all current messages.
 	 * @return the messages
 	 */
-	List<SmtpMessage> getMessages() { server.receivedEmail.collect { it } }
+	List<SmtpMessage> getMessages() { server ? server.receivedEmail.collect { it } : [] }
 
 	/**
 	 * Get the number of sent messages.
 	 * @return the number
 	 */
-	int getMessageCount() { server.receivedEmailSize }
+	int getMessageCount() { server ? server.receivedEmailSize : 0 }
 }
